@@ -21,7 +21,7 @@ def notes_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def notes_list(request, pk=None):
+def notes_detail(request, pk=None):
     try:
         note = Note.objects.get(pk=pk)
     except Note.DoesNotExist:
