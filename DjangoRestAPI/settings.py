@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'notes',
+    'api_app'
 ]
 
 MIDDLEWARE = [
