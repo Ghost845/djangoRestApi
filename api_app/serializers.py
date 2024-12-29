@@ -8,6 +8,14 @@ class NoteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ThinSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='notes-detail')
+
+    class Meta:
+        model = Note
+        fields = ('id', 'title', 'url')
+
+
 # class NoteSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
 #     title = serializers.CharField(required=True, max_length=255)
