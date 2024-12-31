@@ -3,6 +3,11 @@ from notes.models import Note
 
 
 class NoteSerializer(serializers.ModelSerializer):
+    author = serializers.SerializerMethodField(read_only=True)
+
+    def get_author(self, obj):
+        return str(obj.author.email)
+
     class Meta:
         model = Note
         fields = '__all__'
@@ -14,7 +19,6 @@ class ThinSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = ('id', 'title', 'url')
-
 
 # class NoteSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
