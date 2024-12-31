@@ -1,5 +1,5 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import identify_hasher, make_password
 from django.db import models
 
 
@@ -70,6 +70,8 @@ class User(AbstractBaseUser):
         return self.admin
 
     def save(self, *args, **kwargs):
-        if not self.id and not self.staff and not self.admin:
+        try:
+            _alg = identify_hasher(self.password)
+        except ValueError:
             self.password = make_password(self.password)
         super().save(*args, **kwargs)

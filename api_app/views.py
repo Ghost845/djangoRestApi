@@ -1,10 +1,18 @@
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.response import Response
-from rest_framework import viewsets
-
-from api_app.serializers import NoteSerializer, ThinSerializer
-from notes.models import Note
+from django.contrib.auth import get_user_model
 from permissions import IsAuthorOrReadOnly
+from rest_framework import viewsets
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
+
+from api_app.serializers import NoteSerializer, ThinSerializer, UserSerializer
+from notes.models import Note
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    model = get_user_model()
+    queryset = model.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAdminUser, )
 
 
 class NoteViewSet(viewsets.ModelViewSet):

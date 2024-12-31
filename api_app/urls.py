@@ -1,12 +1,10 @@
-from django.urls import path
-
-from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.routers import DefaultRouter
 
-from api_app.views import NoteViewSet
+from api_app.views import NoteViewSet, UserViewSet
 
 router = DefaultRouter()
 router.register('notes', NoteViewSet, basename='notes')
+router.register('users', UserViewSet, basename='users')
 urlpatterns = router.urls
 
 # urlpatterns = [
