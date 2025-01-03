@@ -16,9 +16,20 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class NoteViewSet(viewsets.ModelViewSet):
-    queryset = Note.objects.all()
+    model = Note
+    queryset = model.objects.none()
     serializer_class = NoteSerializer
     permission_classes = (IsAuthorOrReadOnly,)
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ThinSerializer
+        return NoteSerializer
+
+    def get_queryset(self):
+        if self.request.user.admin:
+            return self.model.objects.all()
+        return self.model.objects.filter(author=self.request.user)
 
     def list(self, request, *args, **kwargs):
         notes = Note.objects.all()
